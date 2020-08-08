@@ -3,15 +3,16 @@ import matplotlib.animation as animation
 import time
 import random
 
-def updatefig(x, rectangles, iteration):
-    for rectangle, value in zip(rectangles, x):
+def updateFig(x, rectangles, iteration):
+    for rectangle, value in zip(rectangles, x[0]):
         rectangle.set_height(value)
         rectangle.set_color('b')
-    #rectangle_bars[x[1]].set_color('r')
+    rectangles[x[1]].set_color('r')
     iteration[0] += 1
     text.set_text("# of operations: {}".format(iteration[0]))
+    
 
-def bubble_sort(nums):
+def bubbleSort(nums):
     last = len(nums)
     while last != 0:
         last -= 1
@@ -20,53 +21,13 @@ def bubble_sort(nums):
                 nums[n], nums[n+1] = nums[n+1], nums[n]
                 yield nums, n+1
 
-#def mergesort(A, start, end):
-#    """Merge sort."""
-
-#    if end <= start:
-#        return
-
-#    mid = start + ((end - start + 1) // 2) - 1
-#    mergesort(A, start, mid)
-#    mergesort(A, mid + 1, end)
-#    merge(A, start, mid, end)
-#    yield A
-
-#def merge(A, start, mid, end):
-#    """Helper function for merge sort."""
-    
-#    merged = []
-#    leftIdx = start
-#    rightIdx = mid + 1
-
-#    while leftIdx <= mid and rightIdx <= end:
-#        if A[leftIdx] < A[rightIdx]:
-#            merged.append(A[leftIdx])
-#            leftIdx += 1
-#        else:
-#            merged.append(A[rightIdx])
-#            rightIdx += 1
-
-#    while leftIdx <= mid:
-#        merged.append(A[leftIdx])
-#        leftIdx += 1
-
-#    while rightIdx <= end:
-#        merged.append(A[rightIdx])
-#        rightIdx += 1
-
-#    for i, sorted_val in enumerate(merged):
-#        A[start + i] = sorted_val
-#        yield A
-
-
-def merge_sort(nums):
+def mergeSort(nums):
     if len(nums) <= 1:
         yield nums
 
     mid = len(nums) // 2
-    left = merge_sort(nums[:mid])
-    right = merge_sort(nums[mid:])
+    left = mergeSort(nums[:mid])
+    right = mergeSort(nums[mid:])
     
     yield left
     yield right
@@ -94,22 +55,24 @@ def merge(a, b):
         a[i] = sorted_val
         yield a
 
-x = [random.randint(0,50) for i in range(50)]
+randomArray = [random.randint(0,50) for i in range(50)]
 
 title = 'Bubble Sort'
-generator = mergesort(x, 0, len(x)-1)
+generator = bubbleSort(randomArray)
 
 fig, ax = plt.subplots()
 ax.set_title(title)
-rectangle_bars = ax.bar(range(len(x)), x, align='edge')
+rectangleBars = ax.bar(range(len(randomArray)), randomArray, align='edge')
 text = ax.text(0.02, 0.95, "", transform=ax.transAxes)
-
 iteration = [0]
+
 anim = animation.FuncAnimation(fig, 
-                               func=updatefig, 
-                               fargs = (rectangle_bars, iteration), 
+                               func = updateFig,
+                               fargs = (rectangleBars, iteration), 
                                frames = generator, 
                                interval = 1, 
-                               repeat= False)
+                               repeat = False
+                               )
+
 
 plt.show()
