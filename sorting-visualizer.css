@@ -1,0 +1,42 @@
+h1 {
+  display: flex;
+  justify-content: center;
+  color: #336600;
+  font-family: impact, sans-serif;
+  letter-spacing: 2px;
+  font-size: 70px;
+  text-shadow:
+   1px 0px 1px #ccc, 0px 1px 1px #eee,
+   2px 1px 1px #ccc, 1px 2px 1px #eee,
+   3px 2px 1px #ccc, 2px 3px 1px #eee,
+   4px 3px 1px #ccc, 3px 4px 1px #eee,
+   5px 4px 1px #ccc, 4px 5px 1px #eee,
+   6px 5px 1px #ccc, 5px 6px 1px #eee,
+   7px 6px 1px #ccc;
+}
+body {
+  background-color: black;
+}
+.algorithm-modifiers {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+[class*="algorithm-modifiers__button"] {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background:	#336600;
+  padding: 7px;
+  border-radius: 50px;
+  border: none;
+  transition: all 0.4s ease 0s;
+}
+
+[class*="algorithm-modifiers__button"]:hover {
+  text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(255,248,0,1);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+}
