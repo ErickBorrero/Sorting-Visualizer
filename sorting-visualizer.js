@@ -26,54 +26,95 @@ function createArray() {
     let number = Math.floor(Math.random() * 120 + 1);
     numsArray.push(number);
 
-    animateSort(number);
+    animateSort(number, "green");
   }
 }
 
-function animateSort(number) {
-  ctx.strokeStyle = "green";
+function animateSort(number, color) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 10;
   ctx.beginPath();
   ctx.moveTo(barStart, 0);
   ctx.lineTo(barStart, number * 4);
   ctx.stroke();
 
-  barStart += 8;
+  barStart += 11;
 }
 
 function bubbleSort(numsArray) {
   let last = numsArray.length;
-  let largestIndex = 0;
+  let largestIndex;
 
   while (last != 0) {
     last--;
-    for (n = 0; n <= last; n++) {
-      if (numsArray[n] > numsArray[n + 1]) {
-        [numsArray[n], numsArray[n + 1]] = [numsArray[n + 1], numsArray[n]];
-        largestIndex = n + 1;
+    largestIndex = 0;
+    var count = 0;
+
+    var drawPortion = function () {
+      if (numsArray[count] > numsArray[count + 1]) {
+        [numsArray[count], numsArray[count + 1]] = [
+          numsArray[count + 1],
+          numsArray[count],
+        ];
+        largestIndex = count + 1;
       }
 
-      let count = 0;
       ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
       barStart = 1;
-      var drawPortion = function () {
-        if (count == largestIndex) {
-          ctx.strokeStyle = "red";
-          ctx.beginPath();
-          ctx.moveTo(barStart, 0);
-          ctx.lineTo(barStart, numsArray[count] * 4);
-          ctx.stroke();
 
-          barStart += 8;
+      for (let n = 0; n < numsArray.length; n++) {
+        if (n == largestIndex) {
+          animateSort(numsArray[n], "red");
+        } else {
+          animateSort(numsArray[n], "green");
         }
-        animateSort(numsArray[count]);
-        count++;
+      }
+      count++;
 
-        if (count < numsArray.length) {
-          setTimeout(drawPortion, 100);
-        }
-      };
+      if (count < last) {
+        setTimeout(drawPortion, 1000);
+      }
+    };
+    drawPortion();
+  }
+}
 
-      drawPortion();
+function mergeSort(numsArray) {
+  if (numsArray.length <= 1) {
+    return nums;
+  }
+
+  mid = numsArray.length / 2;
+  left = mergeSort(numsArray.slice(0, mid));
+  right = mergeSort(numsArray.slice(mid));
+
+  return left;
+  return right;
+  return merge(left, right);
+}
+
+function merge(a, b) {
+  merged = [];
+  aIndex, (bIndex = 0), 0;
+
+  while (aIndex < len(a) && bIndex < len(b)) {
+    if (a[aIndex] < b[bIndex]) {
+      merged.append(a[aIndex]);
+      aIndex += 1;
+    } else {
+      merged.append(b[bIndex]);
+      bIndex += 1;
     }
+  }
+
+  if (aIndex == len(a)) {
+    merged.concat(b.splice[bIndex]);
+  } else {
+    merged.concat(a.splice[aIndex]);
+  }
+
+  for ((i, sorted_val) in enumerate(merged)) {
+    a[i] = sorted_val;
+    return a;
   }
 }
