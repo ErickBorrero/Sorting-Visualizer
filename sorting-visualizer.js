@@ -1,5 +1,7 @@
-var barsCanvas;
-var ctx;
+let barsCanvas;
+let ctx;
+let numsArray;
+let barStart = 1;
 
 function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
@@ -16,19 +18,62 @@ function createArray() {
   var size = selection.options[selection.selectedIndex].value;
 
   ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
-  let numbers = [];
-  let barStart = 1;
 
-  for (let n = 0; n <= size; n++) {
+  numsArray = [];
+  barStart = 1;
+
+  for (let n = 0; n < size; n++) {
     let number = Math.floor(Math.random() * 120 + 1);
-    numbers.push(number);
+    numsArray.push(number);
 
-    ctx.strokeStyle = "green";
-    ctx.beginPath();
-    ctx.moveTo(barStart, 0);
-    ctx.lineTo(barStart, number * 4);
-    ctx.stroke();
+    animateSort(number);
+  }
+}
 
-    barStart += 8;
+function animateSort(number) {
+  ctx.strokeStyle = "green";
+  ctx.beginPath();
+  ctx.moveTo(barStart, 0);
+  ctx.lineTo(barStart, number * 4);
+  ctx.stroke();
+
+  barStart += 8;
+}
+
+function bubbleSort(numsArray) {
+  let last = numsArray.length;
+  let largestIndex = 0;
+
+  while (last != 0) {
+    last--;
+    for (n = 0; n <= last; n++) {
+      if (numsArray[n] > numsArray[n + 1]) {
+        [numsArray[n], numsArray[n + 1]] = [numsArray[n + 1], numsArray[n]];
+        largestIndex = n + 1;
+      }
+
+      let count = 0;
+      ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
+      barStart = 1;
+      var drawPortion = function () {
+        if (count == largestIndex) {
+          ctx.strokeStyle = "red";
+          ctx.beginPath();
+          ctx.moveTo(barStart, 0);
+          ctx.lineTo(barStart, numsArray[count] * 4);
+          ctx.stroke();
+
+          barStart += 8;
+        }
+        animateSort(numsArray[count]);
+        count++;
+
+        if (count < numsArray.length) {
+          setTimeout(drawPortion, 100);
+        }
+      };
+
+      drawPortion();
+    }
   }
 }
