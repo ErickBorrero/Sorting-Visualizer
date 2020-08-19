@@ -1,6 +1,6 @@
 let barsCanvas;
 let ctx;
-let numsArray;
+let unsortedArray;
 let barStart = 1;
 
 function createCanvas() {
@@ -19,15 +19,16 @@ function createArray() {
 
   ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
 
-  numsArray = [];
+  unsortedArray = [];
   barStart = 1;
 
   for (let n = 0; n < size; n++) {
     let number = Math.floor(Math.random() * 120 + 1);
-    numsArray.push(number);
+    unsortedArray.push(number);
 
     animateSort(number, "green");
   }
+  return unsortedArray;
 }
 
 function animateSort(number, color) {
@@ -77,44 +78,34 @@ function bubbleSort(numsArray) {
     };
     drawPortion();
   }
+  return numsArray;
 }
 
 function mergeSort(numsArray) {
   if (numsArray.length <= 1) {
-    return nums;
+    return numsArray;
   }
 
-  mid = numsArray.length / 2;
-  left = mergeSort(numsArray.slice(0, mid));
-  right = mergeSort(numsArray.slice(mid));
+  const mid = Math.floor(numsArray.length / 2);
+  const left = numsArray.slice(0, mid);
+  const right = numsArray.slice(mid);
 
-  return left;
-  return right;
-  return merge(left, right);
+  return merge(mergeSort(left), mergeSort(right));
 }
 
 function merge(a, b) {
-  merged = [];
-  aIndex, (bIndex = 0), 0;
+  let merged = [];
+  let aIndex = 0;
+  let bIndex = 0;
 
-  while (aIndex < len(a) && bIndex < len(b)) {
+  while (aIndex < a.length && bIndex < b.length) {
     if (a[aIndex] < b[bIndex]) {
-      merged.append(a[aIndex]);
-      aIndex += 1;
+      merged.push(a[aIndex]);
+      aIndex++;
     } else {
-      merged.append(b[bIndex]);
-      bIndex += 1;
+      merged.push(b[bIndex]);
+      bIndex++;
     }
   }
-
-  if (aIndex == len(a)) {
-    merged.concat(b.splice[bIndex]);
-  } else {
-    merged.concat(a.splice[aIndex]);
-  }
-
-  for ((i, sorted_val) in enumerate(merged)) {
-    a[i] = sorted_val;
-    return a;
-  }
+  return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
 }
