@@ -2,6 +2,7 @@ let barsCanvas;
 let ctx;
 let unsortedArray;
 let barStart = 1;
+let size;
 
 function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
@@ -11,16 +12,20 @@ function createCanvas() {
   barsCanvas.height = 5000;
 }
 
+function clearCanvas() {
+  ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
+  barStart = 1;
+}
+
 function createArray() {
   var selection = document.getElementById(
     "algorithm-modifiers__select--array-size"
   );
-  var size = selection.options[selection.selectedIndex].value;
+  size = selection.options[selection.selectedIndex].value;
 
-  ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
+  clearCanvas();
 
   unsortedArray = [];
-  barStart = 1;
 
   for (let n = 0; n < size; n++) {
     let number = Math.floor(Math.random() * 120 + 1);
@@ -45,6 +50,7 @@ function animateSort(number, color) {
 function bubbleSort(numsArray) {
   let last = numsArray.length;
   let largestIndex;
+  var delay = 1;
 
   while (last != 0) {
     last--;
@@ -60,8 +66,7 @@ function bubbleSort(numsArray) {
         largestIndex = count + 1;
       }
 
-      ctx.clearRect(0, 0, barsCanvas.width, barsCanvas.height);
-      barStart = 1;
+      clearCanvas();
 
       for (let n = 0; n < numsArray.length; n++) {
         if (n == largestIndex) {
@@ -71,9 +76,10 @@ function bubbleSort(numsArray) {
         }
       }
       count++;
+      delay++;
 
       if (count < last) {
-        setTimeout(drawPortion, 1000);
+        setTimeout(drawPortion, delay * 100);
       }
     };
     drawPortion();
@@ -86,9 +92,37 @@ function mergeSort(numsArray) {
     return numsArray;
   }
 
+  if (size == numsArray.length) {
+    clearCanvas();
+  }
+
   const mid = Math.floor(numsArray.length / 2);
   const left = numsArray.slice(0, mid);
   const right = numsArray.slice(mid);
+
+  let leftCount = 0;
+  let rightCount = 0;
+
+  var drawLeftSplit = function () {
+    animateSort(left[leftCount], "blue");
+    leftCount++;
+    if (leftCount < left.length) {
+      setTimeout(drawLeftSplit, 100);
+    }
+  };
+
+  var drawRightSplit = function () {
+    animateSort(right[rightCount], "yellow");
+    rightCount++;
+    if (rightCount < left.length) {
+      setTimeout(drawRightSplit, mid * 100);
+    }
+  };
+  drawLeftSplit();
+  setTiameout(drawRightSplit(), mid * 100);
+  // for (n = 0; n < right.length; n++) {
+  //   animateSort(right[n], "red");
+  // }
 
   return merge(mergeSort(left), mergeSort(right));
 }
@@ -107,5 +141,40 @@ function merge(a, b) {
       bIndex++;
     }
   }
+
+  // var drawmergingPortion = function () {
+  //   clearCanvas();
+
+  //   if (a[aIndex] < b[bIndex]) {
+  //     merged.push(a[aIndex]);
+  //     aIndex++;
+  //   } else {
+  //     merged.push(b[bIndex]);
+  //     bIndex++;
+  //   }
+
+  //   for (n = 0; n < merged.length; n++) {
+  //     animateSort(merged[n], "yellow");
+  //   }
+  // };
+
+  // while (aIndex < a.length && bIndex < b.length) {
+  //   setTimeout(drawmergingPortion, 500);
+  // }
+
+  var count = 0;
+  var drawPortion = function () {
+    clearCanvas();
+
+    animateSort(merged[count], "green");
+
+    count++;
+
+    if (count < merged.length) {
+      setTimeout(drawPortion, 100);
+    }
+  };
+  // setTimeout(drawPortion(), 10000);
+
   return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
 }
