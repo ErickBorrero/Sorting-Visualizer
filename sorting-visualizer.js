@@ -59,10 +59,7 @@ function bubbleSort(numsArray) {
 
     var drawPortion = function () {
       if (numsArray[count] > numsArray[count + 1]) {
-        [numsArray[count], numsArray[count + 1]] = [
-          numsArray[count + 1],
-          numsArray[count],
-        ];
+        swap(numsArray, count, count + 1);
         largestIndex = count + 1;
       }
 
@@ -177,4 +174,37 @@ function merge(a, b) {
   // setTimeout(drawPortion(), 10000);
 
   return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
+}
+
+function quickSort(numsArray) {
+  quickSortSplit(numsArray, 0, numsArray.length - 1);
+
+  return numsArray;
+}
+
+function quickSortSplit(numsArray, start, last) {
+  if (start < last) {
+   let splitIndex = sortArray(numsArray, start, last);
+
+    quickSortSplit(numsArray, start, splitIndex - 1);
+    quickSortSplit(numsArray, splitIndex + 1, last);
+  }
+}
+
+function sortArray(numsArray, start, last) {
+  let pivot = numsArray[last];
+  let partition = start - 1;
+
+  for (let current = start; current < last; current++) {
+    if (numsArray[current] <= pivot) {
+      partition++;
+      swap(numsArray, current, partition);
+    }
+  }
+  swap(numsArray, partition + 1, last);
+  return partition + 1;
+}
+
+function swap(array, first, second) {
+  [array[first], array[second]] = [array[second], array[first]];
 }
