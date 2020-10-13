@@ -3,7 +3,6 @@ let ctx;
 let unsortedArray;
 let barStart = 1;
 let size;
-let quickSortDelay = 1;
 
 function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
@@ -37,7 +36,7 @@ function createArray() {
   return unsortedArray;
 }
 
-async function animateSort(number, color) {
+function animateSort(number, color) {
   ctx.strokeStyle = color;
   ctx.lineWidth = 10;
   ctx.lineCap = "round";
@@ -49,21 +48,20 @@ async function animateSort(number, color) {
   barStart += 11;
 }
 
-function bubbleSort(numsArray) {
+async function bubbleSort(numsArray) {
   let last = numsArray.length;
   let largestIndex;
-  var delay = 1;
 
   document.getElementById("bubble-sort-description").hidden = false;
 
   while (last != 0) {
     last--;
-    largestIndex = 0;
-    var count = 0;
 
-    var drawPortion = function () {
+    for (let count = 0; count < last; count++) {
+      await sleep(25);
+
       if (numsArray[count] > numsArray[count + 1]) {
-        swap(numsArray, count, count + 1);
+        await swap(numsArray, count, count + 1);
         largestIndex = count + 1;
       }
 
@@ -72,66 +70,45 @@ function bubbleSort(numsArray) {
       for (let n = 0; n < numsArray.length; n++) {
         if (n == largestIndex) {
           animateSort(numsArray[n], "red");
+        } else if (n == count) {
+          animateSort(numsArray[n], "blue");
         } else {
           animateSort(numsArray[n], "green");
         }
       }
-      count++;
-      delay++;
-
-      if (count < last) {
-        setTimeout(drawPortion, delay * 100);
-      }
-    };
-    drawPortion();
+    }
   }
 
   return numsArray;
 }
 
-function mergeSort(numsArray) {
+async function mergeSort(numsArray) {
   if (numsArray.length <= 1) {
     return numsArray;
   }
 
   document.getElementById("merge-sort-description").hidden = false;
 
-  if (size == numsArray.length) {
-    clearCanvas();
-  }
-
   const mid = Math.floor(numsArray.length / 2);
   const left = numsArray.slice(0, mid);
   const right = numsArray.slice(mid);
 
-  let leftCount = 0;
-  let rightCount = 0;
+  await sleep(100);
+  clearCanvas();
 
-  var drawLeftSplit = function () {
-    animateSort(left[leftCount], "blue");
-    leftCount++;
-    if (leftCount < left.length) {
-      setTimeout(drawLeftSplit, 100);
+  for (let n = 0; n < numsArray.length; n++) {
+    if (n < mid) {
+      animateSort(numsArray[n], "yellow");
+    } else if (n == mid) {
+      animateSort(numsArray[n], "red");
+    } else if (n > mid) {
+      animateSort(numsArray[n], "orange");
     }
-  };
-
-  var drawRightSplit = function () {
-    animateSort(right[rightCount], "yellow");
-    rightCount++;
-    if (rightCount < left.length) {
-      setTimeout(drawRightSplit, mid * 100);
-    }
-  };
-  drawLeftSplit();
-  setTiameout(drawRightSplit(), mid * 100);
-  // for (n = 0; n < right.length; n++) {
-  //   animateSort(right[n], "red");
-  // }
-
+  }
   return merge(mergeSort(left), mergeSort(right));
 }
 
-function merge(a, b) {
+async function merge(a, b) {
   let merged = [];
   let aIndex = 0;
   let bIndex = 0;
@@ -146,71 +123,20 @@ function merge(a, b) {
     }
   }
 
-  // var drawmergingPortion = function () {
-  //   clearCanvas();
-
-  //   if (a[aIndex] < b[bIndex]) {
-  //     merged.push(a[aIndex]);
-  //     aIndex++;
-  //   } else {
-  //     merged.push(b[bIndex]);
-  //     bIndex++;
-  //   }
-
-  //   for (n = 0; n < merged.length; n++) {
-  //     animateSort(merged[n], "yellow");
-  //   }
-  // };
-
-  // while (aIndex < a.length && bIndex < b.length) {
-  //   setTimeout(drawmergingPortion, 500);
-  // }
-
-  var count = 0;
-  var drawPortion = function () {
-    clearCanvas();
-
-    animateSort(merged[count], "green");
-
-    count++;
-
-    if (count < merged.length) {
-      setTimeout(drawPortion, 100);
-    }
-  };
-  // setTimeout(drawPortion(), 10000);
-
   return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
 }
 
-async function quickSort(numsArray) {
+async function quickSort(numsArray, start, last) {
   document.getElementById("quick-sort-description").hidden = false;
-
-  // await new Promise((resolve, reject) => {
-  //   quickSortSplit(numsArray, 0, numsArray.length - 1);
-  //   resolve();
-  //   for (let n = 0; n < numsArray.length; n++) {
-  //     animateSort(numsArray[n], "yellow");
-  //   }
-  // }, 0);
-
-  quickSortSplit(numsArray, 0, numsArray.length - 1);
-
-  return numsArray;
-}
-
-async function quickSortSplit(numsArray, start, last) {
-  if (start < last) {
-    let splitIndex = await new Promise((resolve, reject) => {
-      sortArray(numsArray, start, last);
-      resolve();
-    }, 0);
-
-    await Promise.all([
-      quickSortSplit(numsArray, start, splitIndex - 1),
-      quickSortSplit(numsArray, splitIndex + 1, last),
-    ]);
+  if (start >= last) {
+    return;
   }
+  let splitIndex = await sortArray(numsArray, start, last);
+
+  await Promise.all([
+    quickSort(numsArray, start, splitIndex - 1),
+    quickSort(numsArray, splitIndex + 1, last),
+  ]);
 }
 
 async function sortArray(numsArray, start, last) {
@@ -218,6 +144,7 @@ async function sortArray(numsArray, start, last) {
   let partition = start - 1;
 
   for (let current = start; current < last; current++) {
+    await sleep(100);
     clearCanvas();
 
     for (let n = 0; n < numsArray.length; n++) {
@@ -228,21 +155,20 @@ async function sortArray(numsArray, start, last) {
       } else {
         animateSort(numsArray[n], "green");
       }
+    }
 
-      if (numsArray[current] <= pivot) {
-        partition++;
-        await swap(numsArray, current, partition);
-      }
+    if (numsArray[current] <= pivot) {
+      partition++;
+      await swap(numsArray, current, partition);
     }
   }
 
   await swap(numsArray, partition + 1, last);
-
   return partition + 1;
 }
 
 async function swap(array, first, second) {
-  await sleep(50);
+  await sleep(100);
   [array[first], array[second]] = [array[second], array[first]];
 }
 
