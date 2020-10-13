@@ -3,13 +3,14 @@ let ctx;
 let unsortedArray;
 let barStart = 1;
 let size;
+let quickSortDelay = 1;
 
 function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
   ctx = barsCanvas.getContext("2d");
 
-  barsCanvas.width = 5000;
-  barsCanvas.height = 5000;
+  barsCanvas.width = 1500;
+  barsCanvas.height = 500;
 }
 
 function clearCanvas() {
@@ -36,9 +37,10 @@ function createArray() {
   return unsortedArray;
 }
 
-function animateSort(number, color) {
+async function animateSort(number, color) {
   ctx.strokeStyle = color;
   ctx.lineWidth = 10;
+  ctx.lineCap = "round";
   ctx.beginPath();
   ctx.moveTo(barStart, 0);
   ctx.lineTo(barStart, number * 4);
@@ -51,6 +53,8 @@ function bubbleSort(numsArray) {
   let last = numsArray.length;
   let largestIndex;
   var delay = 1;
+
+  document.getElementById("bubble-sort-description").hidden = false;
 
   while (last != 0) {
     last--;
@@ -81,6 +85,7 @@ function bubbleSort(numsArray) {
     };
     drawPortion();
   }
+
   return numsArray;
 }
 
@@ -88,6 +93,8 @@ function mergeSort(numsArray) {
   if (numsArray.length <= 1) {
     return numsArray;
   }
+
+  document.getElementById("merge-sort-description").hidden = false;
 
   if (size == numsArray.length) {
     clearCanvas();
@@ -176,35 +183,69 @@ function merge(a, b) {
   return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
 }
 
-function quickSort(numsArray) {
+async function quickSort(numsArray) {
+  document.getElementById("quick-sort-description").hidden = false;
+
+  // await new Promise((resolve, reject) => {
+  //   quickSortSplit(numsArray, 0, numsArray.length - 1);
+  //   resolve();
+  //   for (let n = 0; n < numsArray.length; n++) {
+  //     animateSort(numsArray[n], "yellow");
+  //   }
+  // }, 0);
+
   quickSortSplit(numsArray, 0, numsArray.length - 1);
 
   return numsArray;
 }
 
-function quickSortSplit(numsArray, start, last) {
+async function quickSortSplit(numsArray, start, last) {
   if (start < last) {
-   let splitIndex = sortArray(numsArray, start, last);
+    let splitIndex = await new Promise((resolve, reject) => {
+      sortArray(numsArray, start, last);
+      resolve();
+    }, 0);
 
-    quickSortSplit(numsArray, start, splitIndex - 1);
-    quickSortSplit(numsArray, splitIndex + 1, last);
+    await Promise.all([
+      quickSortSplit(numsArray, start, splitIndex - 1),
+      quickSortSplit(numsArray, splitIndex + 1, last),
+    ]);
   }
 }
 
-function sortArray(numsArray, start, last) {
+async function sortArray(numsArray, start, last) {
   let pivot = numsArray[last];
   let partition = start - 1;
 
   for (let current = start; current < last; current++) {
-    if (numsArray[current] <= pivot) {
-      partition++;
-      swap(numsArray, current, partition);
+    clearCanvas();
+
+    for (let n = 0; n < numsArray.length; n++) {
+      if (n == current) {
+        animateSort(numsArray[n], "red");
+      } else if (n == partition) {
+        animateSort(numsArray[n], "blue");
+      } else {
+        animateSort(numsArray[n], "green");
+      }
+
+      if (numsArray[current] <= pivot) {
+        partition++;
+        await swap(numsArray, current, partition);
+      }
     }
   }
-  swap(numsArray, partition + 1, last);
+
+  await swap(numsArray, partition + 1, last);
+
   return partition + 1;
 }
 
-function swap(array, first, second) {
+async function swap(array, first, second) {
+  await sleep(50);
   [array[first], array[second]] = [array[second], array[first]];
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

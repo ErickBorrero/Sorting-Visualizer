@@ -13,6 +13,15 @@ h1 {
 body {
   background-color: black;
 }
+#myCanvas {
+  padding: 1em;
+}
+p {
+  color: white;
+}
+li {
+  color: white;
+}
 
 .algorithm-modifiers {
   display: flex;
