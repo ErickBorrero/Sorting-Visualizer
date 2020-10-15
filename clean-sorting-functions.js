@@ -13,6 +13,23 @@ function bubbleSort(numsArray) {
   return numsArray;
 }
 
+function insertionSort(numsArray) {
+  let length = numsArray.length;
+
+  for (let unsortedIndex = 1; unsortedIndex < length; unsortedIndex++) {
+    let current = numsArray[unsortedIndex];
+    let sortedIndex = unsortedIndex - 1;
+
+    while (sortedIndex >= 0 && numsArray[sortedIndex] > current) {
+      numsArray[sortedIndex + 1] = numsArray[sortedIndex];
+      sortedIndex--;
+    }
+    numsArray[sortedIndex + 1] = current;
+  }
+
+  return numsArray;
+}
+
 function bottomUpMergeSort(numbers) {
   var numsArray = [];
 
@@ -92,56 +109,9 @@ function sortArray(numsArray, start, last) {
   return partition + 1;
 }
 
-function insertionSort(numsArray) {
-  let length = numsArray.length;
-
-  for (let unsortedIndex = 1; unsortedIndex < length; unsortedIndex++) {
-    let current = numsArray[unsortedIndex];
-    let sortedIndex = unsortedIndex - 1;
-
-    while (sortedIndex >= 0 && numsArray[sortedIndex] > current) {
-      numsArray[sortedIndex + 1] = numsArray[sortedIndex];
-      sortedIndex--;
-    }
-    numsArray[sortedIndex + 1] = current;
-  }
-
-  return numsArray;
-}
-
 function swap(array, first, second) {
   [array[first], array[second]] = [array[second], array[first]];
 }
-
-// function mergeSort(numsArray) {
-//   if (numsArray.length <= 1) {
-//     return numsArray;
-//   }
-
-//   const mid = Math.floor(numsArray.length / 2);
-//   const left = numsArray.slice(0, mid);
-//   const right = numsArray.slice(mid);
-
-//   return merge(mergeSort(left), mergeSort(right));
-// }
-
-// function merge(a, b) {
-//   let merged = [];
-//   let aIndex = 0;
-//   let bIndex = 0;
-
-//   while (aIndex < a.length && bIndex < b.length) {
-//     if (a[aIndex] < b[bIndex]) {
-//       merged.push(a[aIndex]);
-//       aIndex++;
-//     } else {
-//       merged.push(b[bIndex]);
-//       bIndex++;
-//     }
-//   }
-
-//   return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
-// }
 
 arr = [
   70,
@@ -172,5 +142,3 @@ arr = [
 ];
 
 console.log(bottomUpMergeSort(arr));
-
-// document.getElementById("merge-sort-description").hidden = false;
