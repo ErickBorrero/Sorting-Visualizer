@@ -13,34 +13,54 @@ function bubbleSort(numsArray) {
   return numsArray;
 }
 
-function mergeSort(numsArray) {
-  if (numsArray.length <= 1) {
-    return numsArray;
+function bottomUpMergeSort(numbers) {
+  var numsArray = [];
+
+  if (numbers) {
+    numsArray = numbers.map(function (number) {
+      return number;
+    });
   }
 
-  const mid = Math.floor(numsArray.length / 2);
-  const left = numsArray.slice(0, mid);
-  const right = numsArray.slice(mid);
+  bottomUpSort(numsArray, numsArray.length);
 
-  return merge(mergeSort(left), mergeSort(right));
+  return numsArray;
 }
 
-function merge(a, b) {
-  let merged = [];
-  let aIndex = 0;
-  let bIndex = 0;
+function bottomUpSort(numbers, n) {
+  var width, i;
 
-  while (aIndex < a.length && bIndex < b.length) {
-    if (a[aIndex] < b[bIndex]) {
-      merged.push(a[aIndex]);
-      aIndex++;
+  for (width = 1; width < n; width = width * 2) {
+    for (i = 0; i < n; i = i + 2 * width) {
+      bottomUpMerge(
+        numbers,
+        i,
+        Math.min(i + width, n),
+        Math.min(i + 2 * width, n)
+      );
+    }
+  }
+}
+
+function bottomUpMerge(numbers, left, right, end) {
+  var n = left,
+    m = right,
+    currentSort = [],
+    j;
+
+  for (j = left; j < end; j++) {
+    if (n < right && (m >= end || numbers[n] < numbers[m])) {
+      currentSort.push(numbers[n]);
+      n++;
     } else {
-      merged.push(b[bIndex]);
-      bIndex++;
+      currentSort.push(numbers[m]);
+      m++;
     }
   }
 
-  return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
+  currentSort.map(function (number, i) {
+    numbers[left + i] = number;
+  });
 }
 
 function quickSort(numsArray) {
@@ -72,9 +92,56 @@ function sortArray(numsArray, start, last) {
   return partition + 1;
 }
 
+function insertionSort(numsArray) {
+  let length = numsArray.length;
+
+  for (let unsortedIndex = 1; unsortedIndex < length; unsortedIndex++) {
+    let current = numsArray[unsortedIndex];
+    let sortedIndex = unsortedIndex - 1;
+
+    while (sortedIndex >= 0 && numsArray[sortedIndex] > current) {
+      numsArray[sortedIndex + 1] = numsArray[sortedIndex];
+      sortedIndex--;
+    }
+    numsArray[sortedIndex + 1] = current;
+  }
+
+  return numsArray;
+}
+
 function swap(array, first, second) {
   [array[first], array[second]] = [array[second], array[first]];
 }
+
+// function mergeSort(numsArray) {
+//   if (numsArray.length <= 1) {
+//     return numsArray;
+//   }
+
+//   const mid = Math.floor(numsArray.length / 2);
+//   const left = numsArray.slice(0, mid);
+//   const right = numsArray.slice(mid);
+
+//   return merge(mergeSort(left), mergeSort(right));
+// }
+
+// function merge(a, b) {
+//   let merged = [];
+//   let aIndex = 0;
+//   let bIndex = 0;
+
+//   while (aIndex < a.length && bIndex < b.length) {
+//     if (a[aIndex] < b[bIndex]) {
+//       merged.push(a[aIndex]);
+//       aIndex++;
+//     } else {
+//       merged.push(b[bIndex]);
+//       bIndex++;
+//     }
+//   }
+
+//   return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
+// }
 
 arr = [
   70,
@@ -104,4 +171,6 @@ arr = [
   46,
 ];
 
-console.log(quickSort(arr));
+console.log(bottomUpMergeSort(arr));
+
+// document.getElementById("merge-sort-description").hidden = false;

@@ -17,7 +17,7 @@ function clearCanvas() {
   barStart = 1;
 }
 
-function createArray() {
+async function createArray() {
   var selection = document.getElementById(
     "algorithm-modifiers__select--array-size"
   );
@@ -27,11 +27,12 @@ function createArray() {
 
   unsortedArray = [];
 
-  for (let n = 0; n < size; n++) {
+  for (let length = 0; length < size; length++) {
+    await sleep(15);
     let number = Math.floor(Math.random() * 120 + 1);
     unsortedArray.push(number);
 
-    animateSort(number, "green");
+    animateSort(number, "#250253");
   }
   return unsortedArray;
 }
@@ -58,7 +59,7 @@ async function bubbleSort(numsArray) {
     last--;
 
     for (let count = 0; count < last; count++) {
-      await sleep(25);
+      await sleep(20);
 
       if (numsArray[count] > numsArray[count + 1]) {
         await swap(numsArray, count, count + 1);
@@ -67,63 +68,91 @@ async function bubbleSort(numsArray) {
 
       clearCanvas();
 
-      for (let n = 0; n < numsArray.length; n++) {
-        if (n == largestIndex) {
-          animateSort(numsArray[n], "red");
-        } else if (n == count) {
-          animateSort(numsArray[n], "blue");
+      for (let length = 0; length < numsArray.length; length++) {
+        if (length == largestIndex) {
+          animateSort(numsArray[length], "red");
+        } else if (length > last) {
+          animateSort(numsArray[length], "green");
         } else {
-          animateSort(numsArray[n], "green");
+          animateSort(numsArray[length], "#250253");
         }
       }
     }
   }
 
+  finalArray(numsArray);
+
   return numsArray;
 }
 
-async function mergeSort(numsArray) {
-  if (numsArray.length <= 1) {
-    return numsArray;
+async function bottomUpMergeSort(numbers) {
+  var numsArray = [];
+
+  if (numbers) {
+    numsArray = numbers.map(function (number) {
+      return number;
+    });
   }
 
-  document.getElementById("merge-sort-description").hidden = false;
+  await Promise.all([bottomUpSort(numsArray, numsArray.length)]);
+  await finalArray(numsArray);
 
-  const mid = Math.floor(numsArray.length / 2);
-  const left = numsArray.slice(0, mid);
-  const right = numsArray.slice(mid);
-
-  await sleep(100);
-  clearCanvas();
-
-  for (let n = 0; n < numsArray.length; n++) {
-    if (n < mid) {
-      animateSort(numsArray[n], "yellow");
-    } else if (n == mid) {
-      animateSort(numsArray[n], "red");
-    } else if (n > mid) {
-      animateSort(numsArray[n], "orange");
-    }
-  }
-  return merge(mergeSort(left), mergeSort(right));
+  return numsArray;
 }
 
-async function merge(a, b) {
-  let merged = [];
-  let aIndex = 0;
-  let bIndex = 0;
+async function bottomUpSort(numbers, length) {
+  var width, i;
 
-  while (aIndex < a.length && bIndex < b.length) {
-    if (a[aIndex] < b[bIndex]) {
-      merged.push(a[aIndex]);
-      aIndex++;
+  for (width = 1; width < length; width = width * 2) {
+    clearCanvas();
+
+    for (n = 0; n < length; n++) {
+      await sleep(100);
+      if (n >= width && n < length) {
+        animateSort(numbers[n], "yellow");
+      }
+    }
+    for (i = 0; i < length; i = i + 2 * width) {
+      bottomUpMerge(
+        numbers,
+        i,
+        Math.min(i + width, length),
+        Math.min(i + 2 * width, length)
+      );
+    }
+  }
+}
+
+async function bottomUpMerge(numbers, left, right, end) {
+  var length = left,
+    m = right,
+    currentSort = [],
+    j;
+
+  for (j = left; j < end; j++) {
+    clearCanvas();
+    await sleep(50);
+
+    for (let n = 0; n < currentSort.length; n++) {
+      animateSort(currentSort[n], "orange");
+    }
+    if (length < right && (m >= end || numbers[length] < numbers[m])) {
+      currentSort.push(numbers[length]);
+      length++;
     } else {
-      merged.push(b[bIndex]);
-      bIndex++;
+      currentSort.push(numbers[m]);
+      m++;
     }
   }
 
-  return merged.concat(a.slice(aIndex)).concat(b.slice(bIndex));
+  currentSort.map(function (number, i) {
+    numbers[left + i] = number;
+  });
+}
+
+async function callQuickSort(numsArray) {
+  await quickSort(numsArray, 0, unsortedArray.length - 1);
+  finalArray(numsArray);
 }
 
 async function quickSort(numsArray, start, last) {
@@ -144,16 +173,16 @@ async function sortArray(numsArray, start, last) {
   let partition = start - 1;
 
   for (let current = start; current < last; current++) {
-    await sleep(100);
+    await sleep(50);
     clearCanvas();
 
-    for (let n = 0; n < numsArray.length; n++) {
-      if (n == current) {
-        animateSort(numsArray[n], "red");
-      } else if (n == partition) {
-        animateSort(numsArray[n], "blue");
+    for (let length = 0; length < numsArray.length; length++) {
+      if (length == current) {
+        animateSort(numsArray[length], "red");
+      } else if (length == partition) {
+        animateSort(numsArray[length], "blue");
       } else {
-        animateSort(numsArray[n], "green");
+        animateSort(numsArray[length], "#250253");
       }
     }
 
@@ -167,9 +196,50 @@ async function sortArray(numsArray, start, last) {
   return partition + 1;
 }
 
+async function insertionSort(numsArray) {
+  let length = numsArray.length;
+
+  for (let unsortedIndex = 1; unsortedIndex < length; unsortedIndex++) {
+    let current = numsArray[unsortedIndex];
+    let sortedIndex = unsortedIndex - 1;
+
+    while (sortedIndex >= 0 && numsArray[sortedIndex] > current) {
+      numsArray[sortedIndex + 1] = numsArray[sortedIndex];
+      sortedIndex--;
+
+      await sleep(100);
+      clearCanvas();
+
+      for (let length = 0; length < numsArray.length; length++) {
+        if (length == sortedIndex) {
+          animateSort(numsArray[length], "red");
+        } else if (length < unsortedIndex) {
+          animateSort(numsArray[length], "green");
+        } else {
+          animateSort(numsArray[length], "#250253");
+        }
+      }
+    }
+    numsArray[sortedIndex + 1] = current;
+  }
+
+  finalArray(numsArray);
+
+  return numsArray;
+}
+
 async function swap(array, first, second) {
   await sleep(100);
   [array[first], array[second]] = [array[second], array[first]];
+}
+
+async function finalArray(numsArray) {
+  clearCanvas();
+
+  for (let length = 0; length < numsArray.length; length++) {
+    await sleep(50);
+    animateSort(numsArray[length], "green");
+  }
 }
 
 function sleep(ms) {

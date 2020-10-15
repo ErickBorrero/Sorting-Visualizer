@@ -11,18 +11,15 @@
   <body onload="createCanvas()">
     <h1>Sorting Visualizer</h1>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
-      turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
-      Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat
-      pharetra. Praesent maximus justo mattis turpis posuere viverra.
-      Pellentesque vestibulum nunc sed nisl fringilla imperdiet. Praesent
-      ultrices nunc nec augue commodo varius. Donec a tellus gravida, aliquet
-      urna vitae, cursus sapien. Cras convallis nisi nulla, quis ullamcorper
-      mauris placerat ut. Phasellus non augue vel dui fringilla auctor. Cras sit
-      amet orci congue, faucibus urna non, ullamcorper diam. Fusce iaculis
-      dapibus mi vel volutpat. Ut congue dignissim nisi, ut blandit enim
-      placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
-      pretium sapien scelerisque egestas.
+      This is a project where we get to see what happens behind the scenes
+      whenever we need to sort and order through a list on integers. Although
+      the visualization adds no value to the algorithms itself, we can see how
+      different algorithms handle iterating through the lists, whether in an
+      efficient or inefficient manner. We can explore the complexities of how
+      some algorithms may require additional space, how some require no
+      additonal space(at the expense of time), and where and why one may choose
+      to select one over another. Starting with bubble sort, a brute force
+      approach, to more efficient solutions like merge and quick sort.
     </p>
     <ul>
       <li>
@@ -47,9 +44,17 @@
       </button>
       <button
         type="button"
+        class="algorithm-modifiers__button--Insertion-sort"
+        name="Insertion-sort-button"
+        onclick="insertionSort(unsortedArray)"
+      >
+        Insertion Sort
+      </button>
+      <button
+        type="button"
         class="algorithm-modifiers__button--merge-sort"
         name="merge-sort-button"
-        onclick="mergeSort(unsortedArray)"
+        onclick="bottomUpMergeSort(unsortedArray)"
       >
         Merge Sort
       </button>
@@ -57,17 +62,9 @@
         type="button"
         class="algorithm-modifiers__button--quick-sort"
         name="quick-sort-button"
-        onclick="quickSort(unsortedArray, 0, unsortedArray.length - 1)"
+        onclick="callQuickSort(unsortedArray)"
       >
         Quick Sort
-      </button>
-      <button
-        type="button"
-        class="algorithm-modifiers__button--heap-sort"
-        name="heap-sort-button"
-        onclick=""
-      >
-        Heap Sort
       </button>
       <button
         type="button"
@@ -121,7 +118,7 @@
       placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
       pretium sapien scelerisque egestas.
     </p>
-    <p hidden id="heap-sort-description">
+    <p hidden id="Insertion-sort-description">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
       turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
       Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat
