@@ -8,7 +8,7 @@
     </style>
     <script src="sorting-visualizer.js" charset="utf-8"></script>
   </head>
-  <body onload="createCanvas()">
+  <body onload="createCanvas(); disableSortButtons()">
     <h1>Sorting Visualizer</h1>
     <p>
       This is a project where we get to see what happens behind the scenes
@@ -39,7 +39,7 @@
           type="button"
           class="algorithm-modifiers__button--bubble-sort"
           name="bubble-sort-button"
-          onclick="bubbleSort(unsortedArray); disableButtonClicking()"
+          onclick="disableButtonClicking(); bubbleSort(unsortedArray)"
           id="bubble-sort"
         >
           Bubble Sort
@@ -50,7 +50,7 @@
           type="button"
           class="algorithm-modifiers__button--Insertion-sort"
           name="Insertion-sort-button"
-          onclick="insertionSort(unsortedArray); disableButtonClicking()"
+          onclick="disableButtonClicking(); insertionSort(unsortedArray)"
           id="insertion-sort"
         >
           Insertion Sort
@@ -61,7 +61,7 @@
           type="button"
           class="algorithm-modifiers__button--merge-sort"
           name="merge-sort-button"
-          onclick="drawMergeSort(); disableButtonClicking()"
+          onclick="disableButtonClicking(); drawMergeSort()"
           id="merge-sort"
         >
           Merge Sort
@@ -72,7 +72,7 @@
           type="button"
           class="algorithm-modifiers__button--quick-sort"
           name="quick-sort-button"
-          onclick="callQuickSort(unsortedArray); disableButtonClicking()"
+          onclick="disableButtonClicking(); callQuickSort(unsortedArray)"
           id="quick-sort"
         >
           Quick Sort
@@ -92,18 +92,19 @@
     </div>
     <canvas id="myCanvas"></canvas>
     <p hidden id="bubble-sort-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
-      turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
-      Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat
-      pharetra. Praesent maximus justo mattis turpis posuere viverra.
-      Pellentesque vestibulum nunc sed nisl fringilla imperdiet. Praesent
-      ultrices nunc nec augue commodo varius. Donec a tellus gravida, aliquet
-      urna vitae, cursus sapien. Cras convallis nisi nulla, quis ullamcorper
-      mauris placerat ut. Phasellus non augue vel dui fringilla auctor. Cras sit
-      amet orci congue, faucibus urna non, ullamcorper diam. Fusce iaculis
-      dapibus mi vel volutpat. Ut congue dignissim nisi, ut blandit enim
-      placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
-      pretium sapien scelerisque egestas.
+      Bubble sort can be considered one of the most primitive sorting
+      algorithms. The reason for that can be attributed to its brute-force
+      approach at tackling the sorting problem. It will loop through your array
+      of items,like numbers for example. comparing every value along the way. At
+      any point that it notices the following value is larger than the current
+      one, it will swap places with that number(i.e. 1, 2 -> 2, 1). What we, in
+      turn, will see is that as it loops through the array it is fundamentally
+      "pulling" along the largest number to the end of the array. Once done, it
+      starts over again until it then places the 2nd largest integer in the 2nd
+      to last place. It will continue to do so until the entire array is sorted.
+      This method causes this algorithm to, on average, have a time complexity
+      of O(n^2), where n is the number of items in your array, due to it having
+      to do n^2 operations to fully sort the array.
     </p>
     <p hidden id="merge-sort-description">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex

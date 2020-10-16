@@ -1,6 +1,7 @@
 let barsCanvas;
 let ctx;
 let unsortedArray;
+let sorted;
 let barStart = 1;
 let size;
 let sortHist;
@@ -29,6 +30,9 @@ function clearCanvas() {
 }
 
 async function createArray() {
+  sorted = false;
+  historyIndex = 0;
+  enableButtonClicking();
   var selection = document.getElementById(
     "algorithm-modifiers__select--array-size"
   );
@@ -65,7 +69,13 @@ async function bubbleSort(numsArray) {
   let largestIndex;
 
   document.getElementById("bubble-sort-description").hidden = false;
-
+  if (sorted) {
+    alert(
+      "The current array has already been sorted. Please create a new array before continuing"
+    );
+    enableButtonClicking();
+    return;
+  }
   while (last != 0) {
     last--;
 
@@ -93,13 +103,20 @@ async function bubbleSort(numsArray) {
 
   finalArray(numsArray);
   enableButtonClicking();
+  sorted = true;
 
   return numsArray;
 }
 
 async function drawMergeSort() {
   document.getElementById("merge-sort-description").hidden = false;
-
+  if (sorted) {
+    alert(
+      "The current array has already been sorted. Please create a new array before continuing"
+    );
+    enableButtonClicking();
+    return;
+  }
   sortHist = await Promise.all(mergeSort(unsortedArray));
 
   while (historyIndex < sortHist.length) {
@@ -129,6 +146,7 @@ async function drawMergeSort() {
     (countDown = 0), (countUp = 0);
   }
   enableButtonClicking();
+  sorted = true;
 }
 
 function mergeSort(array) {
@@ -158,10 +176,17 @@ function mergeSort(array) {
 
 async function callQuickSort(numsArray) {
   document.getElementById("quick-sort-description").hidden = false;
-
+  if (sorted) {
+    alert(
+      "The current array has already been sorted. Please create a new array before continuing"
+    );
+    enableButtonClicking();
+    return;
+  }
   await quickSort(numsArray, 0, unsortedArray.length - 1);
   finalArray(numsArray);
   enableButtonClicking();
+  sorted = true;
 }
 
 async function quickSort(numsArray, start, last) {
@@ -207,7 +232,13 @@ async function sortArray(numsArray, start, last) {
 
 async function insertionSort(numsArray) {
   document.getElementById("insertion-sort-description").hidden = false;
-
+  if (sorted) {
+    enableButtonClicking();
+    alert(
+      "The current array has already been sorted. Please create a new array before continuing"
+    );
+    return;
+  }
   let length = numsArray.length;
 
   for (let unsortedIndex = 1; unsortedIndex < length; unsortedIndex++) {
@@ -236,6 +267,7 @@ async function insertionSort(numsArray) {
 
   finalArray(numsArray);
   enableButtonClicking();
+  sorted = true;
   return numsArray;
 }
 
@@ -266,5 +298,10 @@ function disableButtonClicking() {
 function enableButtonClicking() {
   for (let index = 0; index < buttonsArray.length; index++) {
     document.getElementById(buttonsArray[index]).style.pointerEvents = "auto";
+  }
+}
+function disableSortButtons() {
+  for (let index = 1; index < buttonsArray.length; index++) {
+    document.getElementById(buttonsArray[index]).style.pointerEvents = "none";
   }
 }
