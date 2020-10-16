@@ -19,6 +19,9 @@ body {
 p {
   font-size: 19px;
 }
+b {
+  font-size: 21px;
+}
 li {
   display: flex;
   justify-content: center;
@@ -29,7 +32,7 @@ li {
 .algorithm-modifiers {
   display: flex;
   justify-content: space-around;
-  border-bottom: 4px double #7e685a;
+  border-bottom: 4px double #2c5030;
   padding-bottom: 1px;
 }
 

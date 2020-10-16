@@ -32,7 +32,10 @@ function clearCanvas() {
 async function createArray() {
   sorted = false;
   historyIndex = 0;
+
   enableButtonClicking();
+  hideAllDescriptions();
+
   var selection = document.getElementById(
     "algorithm-modifiers__select--array-size"
   );
@@ -68,7 +71,8 @@ async function bubbleSort(numsArray) {
   let last = numsArray.length;
   let largestIndex;
 
-  document.getElementById("bubble-sort-description").hidden = false;
+  unhideDescription("bubble-sort-description");
+
   if (sorted) {
     alert(
       "The current array has already been sorted. Please create a new array before continuing"
@@ -109,7 +113,8 @@ async function bubbleSort(numsArray) {
 }
 
 async function drawMergeSort() {
-  document.getElementById("merge-sort-description").hidden = false;
+  unhideDescription("merge-sort-description");
+
   if (sorted) {
     alert(
       "The current array has already been sorted. Please create a new array before continuing"
@@ -175,7 +180,8 @@ function mergeSort(array) {
 }
 
 async function callQuickSort(numsArray) {
-  document.getElementById("quick-sort-description").hidden = false;
+  unhideDescription("quick-sort-description");
+
   if (sorted) {
     alert(
       "The current array has already been sorted. Please create a new array before continuing"
@@ -231,7 +237,8 @@ async function sortArray(numsArray, start, last) {
 }
 
 async function insertionSort(numsArray) {
-  document.getElementById("insertion-sort-description").hidden = false;
+  unhideDescription("insertion-sort-description");
+
   if (sorted) {
     enableButtonClicking();
     alert(
@@ -300,8 +307,25 @@ function enableButtonClicking() {
     document.getElementById(buttonsArray[index]).style.pointerEvents = "auto";
   }
 }
+
 function disableSortButtons() {
   for (let index = 1; index < buttonsArray.length; index++) {
     document.getElementById(buttonsArray[index]).style.pointerEvents = "none";
   }
+}
+
+function unhideDescription(choice) {
+  document.getElementById("bubble-sort-description").hidden = true;
+  document.getElementById("insertion-sort-description").hidden = true;
+  document.getElementById("merge-sort-description").hidden = true;
+  document.getElementById("quick-sort-description").hidden = true;
+
+  document.getElementById(choice).hidden = false;
+}
+
+function hideAllDescriptions() {
+  document.getElementById("bubble-sort-description").hidden = true;
+  document.getElementById("insertion-sort-description").hidden = true;
+  document.getElementById("merge-sort-description").hidden = true;
+  document.getElementById("quick-sort-description").hidden = true;
 }

@@ -12,7 +12,7 @@
     <h1>Sorting Visualizer</h1>
     <p>
       This is a project where we get to see what happens behind the scenes
-      whenever we need to sort and order through a list on integers. Although
+      whenever we need to sort and order through an array of numbers. Although
       the visualization adds no value to the algorithms itself, we can see how
       different algorithms handle iterating through the lists, whether in an
       efficient or inefficient manner. We can explore the complexities of how
@@ -20,6 +20,10 @@
       additonal space(at the expense of time), and where and why one may choose
       to select one over another. Starting with bubble sort, a brute force
       approach, to more efficient solutions like merge and quick sort.
+      <b
+        >(If you feel "trapped" watching a sorting you do not want to see, feel
+        free to refresh the page and pick the sorting of your choice.)
+      </b>
     </p>
     <ul>
       <li>
@@ -95,58 +99,60 @@
       Bubble sort can be considered one of the most primitive sorting
       algorithms. The reason for that can be attributed to its brute-force
       approach at tackling the sorting problem. It will loop through your array
-      of items,like numbers for example. comparing every value along the way. At
-      any point that it notices the following value is larger than the current
-      one, it will swap places with that number(i.e. 1, 2 -> 2, 1). What we, in
-      turn, will see is that as it loops through the array it is fundamentally
-      "pulling" along the largest number to the end of the array. Once done, it
-      starts over again until it then places the 2nd largest integer in the 2nd
-      to last place. It will continue to do so until the entire array is sorted.
-      This method causes this algorithm to, on average, have a time complexity
-      of O(n^2), where n is the number of items in your array, due to it having
-      to do n^2 operations to fully sort the array.
+      of numbers comparing every value along the way. At any point that it
+      notices the following value is larger than the current one, it will swap
+      places with that number(i.e. 2, 1 -> 1, 2). What we, in turn, will see is
+      that as it loops through the array it is fundamentally "pulling" along the
+      largest number to the end of the array. Once done, it starts over again
+      until it then places the 2nd largest integer in the 2nd to last place. It
+      will continue to do so until the entire array is sorted. This method
+      causes this algorithm to, on average, have a time complexity of O(n^2),
+      where n is the number of items in your array, due to it having to do n^2
+      operations to fully sort the array.
     </p>
     <p hidden id="merge-sort-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
-      turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
-      Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat
-      pharetra. Praesent maximus justo mattis turpis posuere viverra.
-      Pellentesque vestibulum nunc sed nisl fringilla imperdiet. Praesent
-      ultrices nunc nec augue commodo varius. Donec a tellus gravida, aliquet
-      urna vitae, cursus sapien. Cras convallis nisi nulla, quis ullamcorper
-      mauris placerat ut. Phasellus non augue vel dui fringilla auctor. Cras sit
-      amet orci congue, faucibus urna non, ullamcorper diam. Fusce iaculis
-      dapibus mi vel volutpat. Ut congue dignissim nisi, ut blandit enim
-      placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
-      pretium sapien scelerisque egestas.
+      Merge sort is a much more efficient algorithm that focuses on slicing the
+      array into individual elements. It starts by breaking down an array until
+      it is comprised of multiple arrays of 1 number each(i.e. [3, 2, 4, 1] ->
+      [3], [2], [4], [1]). Once there, the sorting begins. Merge sort looks to
+      exponentially add numbers to new arrays, ordering them as it goes along.
+      As such, the 1st loop through it puts numbers into arrays of size 1, the
+      2nd time through it will merge those arrays into groups of 2, then 4, then
+      8, etc... So we see [3], [2], [4], [1] become [3, 2], [4, 1], and then [1,
+      2, 3, 4]. Merge sort has an average time complexity of O(n log n), but has
+      a small downside of taking additional space as it has to write to merging
+      numbers to new arrays.
     </p>
     <p hidden id="quick-sort-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
-      turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
-      Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat
-      pharetra. Praesent maximus justo mattis turpis posuere viverra.
-      Pellentesque vestibulum nunc sed nisl fringilla imperdiet. Praesent
-      ultrices nunc nec augue commodo varius. Donec a tellus gravida, aliquet
-      urna vitae, cursus sapien. Cras convallis nisi nulla, quis ullamcorper
-      mauris placerat ut. Phasellus non augue vel dui fringilla auctor. Cras sit
-      amet orci congue, faucibus urna non, ullamcorper diam. Fusce iaculis
-      dapibus mi vel volutpat. Ut congue dignissim nisi, ut blandit enim
-      placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
-      pretium sapien scelerisque egestas.
+      Quick sort is a similar algorithm as merge sort in the sense that it is a
+      "divide and conquer" algorithm. Quick sort relies on splitting the array
+      based on comparisons to a number from the array called a "pivot". Based on
+      if the rest of the numbers are either smaller or larger, it will determine
+      if the algorithm will place that number to the left(smaller) or
+      right(larger) of the pivot ([2, 7, 5, 1, 3,] pivot = 3 -> L[2, 1] R[3, 7,
+      5]). Once it loops through the array once, it will then repeat that
+      process to both sides, choosing a new pivot value from within that section
+      of numbers. This process continues until it reaches left and right side
+      arrays that are of size 1, at which point the entire array will be sorted.
+      At best case, quick sort can also have a time complexity of O(n log n),
+      but it heavily relies on a good pivot point being chosen(ideally a number
+      close to the average of the numbers within the array). A benefit of quick
+      over merge sort though is that quick sort can work in place, as to say
+      that it does not require additional space to write values to new arrays.
     </p>
     <p hidden id="insertion-sort-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
-      turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
-      Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat
-      pharetra. Praesent maximus justo mattis turpis posuere viverra.
-      Pellentesque vestibulum nunc sed nisl fringilla imperdiet. Praesent
-      ultrices nunc nec augue commodo varius. Donec a tellus gravida, aliquet
-      urna vitae, cursus sapien. Cras convallis nisi nulla, quis ullamcorper
-      mauris placerat ut. Phasellus non augue vel dui fringilla auctor. Cras sit
-      amet orci congue, faucibus urna non, ullamcorper diam. Fusce iaculis
-      dapibus mi vel volutpat. Ut congue dignissim nisi, ut blandit enim
-      placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
-      pretium sapien scelerisque egestas.
+      Insertion sort is an algorithm that works through an array similar to
+      bubble sort, but in a more efficient manner. It starts at the left bound
+      of the array(the 1st number) and considers that number to be sorted. It
+      will then look at the following number and look back to the left side of
+      it to decide where it should be placed(as everything to the left of the
+      current number will be considered sorted). When going back through the
+      sorted side, the current number being evaluated will swap with the
+      previous one, going down the chain until it reaches where it belongs([1,
+      5, 7, 3] -> [1, 5, 3, 7] -> [1, 3, 5, 7]). Worst case, insertion sort will
+      still have a time complexity of O(^ 2). But on average, it will outperform
+      bubble sort as not always will it have to fully go down the sorted side to
+      place the next value.
     </p>
   </body>
 </html>
