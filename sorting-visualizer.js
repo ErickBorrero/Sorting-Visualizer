@@ -85,69 +85,127 @@ async function bubbleSort(numsArray) {
   return numsArray;
 }
 
-async function bottomUpMergeSort(numbers) {
-  var numsArray = [];
+// async function bottomUpMergeSort(numbers) {
+//   var numsArray = [];
 
-  if (numbers) {
-    numsArray = numbers.map(function (number) {
-      return number;
-    });
-  }
+//   if (numbers) {
+//     numsArray = numbers.map(function (number) {
+//       return number;
+//     });
+//   }
 
-  await Promise.all([bottomUpSort(numsArray, numsArray.length)]);
-  await finalArray(numsArray);
+//   await Promise.all([bottomUpSort(numsArray, numsArray.length)]);
+//   finalArray(numsArray);
 
-  return numsArray;
-}
+//   return numsArray;
+// }
 
-async function bottomUpSort(numbers, length) {
-  var width, i;
+// async function bottomUpSort(numbers, length) {
+//   var width, i;
 
-  for (width = 1; width < length; width = width * 2) {
+//   for (width = 1; width < length; width = width * 2) {
+//     clearCanvas();
+
+//     await sleep(1800);
+//     for (i = 0; i < length; i = i + 2 * width) {
+//       bottomUpMerge(
+//         numbers,
+//         i,
+//         Math.min(i + width, length),
+//         Math.min(i + 2 * width, length)
+//       );
+//     }
+//   }
+// }
+
+// async function bottomUpMerge(numbers, left, right, end) {
+//   var length = left,
+//     m = right,
+//     currentSort = [],
+//     j;
+
+//   for (j = left; j < end; j++) {
+//     if (length < right && (m >= end || numbers[length] < numbers[m])) {
+//       currentSort.push(numbers[length]);
+//       length++;
+//     } else {
+//       currentSort.push(numbers[m]);
+//       m++;
+//     }
+//   }
+//   clearCanvas();
+//   await sleep(50);
+
+//   for (let n = 0; n < currentSort.length; n++) {
+//     if (n < right) {
+//       animateSort(currentSort[n], "yellow");
+//     } else {
+//       animateSort(currentSort[n], "orange");
+//     }
+//   }
+
+//   currentSort.map(function (number, i) {
+//     numbers[left + i] = number;
+//   });
+// }
+
+let sortHist;
+var historyIndex = 0;
+let countUp = 0;
+let countDown = 0;
+async function drawMergeSort() {
+  sortHist = await Promise.all(mergeSort(unsortedArray));
+  while (historyIndex < sortHist.length) {
     clearCanvas();
-
-    for (n = 0; n < length; n++) {
-      await sleep(100);
-      if (n >= width && n < length) {
-        animateSort(numbers[n], "yellow");
+    if (historyIndex == sortHist.length - 1) {
+      for (i = 0; i < sortHist[historyIndex].length; i++) {
+        await sleep(50);
+        animateSort(sortHist[historyIndex][i], "green");
+      }
+    } else if (historyIndex >= 0) {
+      for (i = 0; i < sortHist[historyIndex].length; i++) {
+        await sleep(50);
+        if (countUp < 2 ** historyIndex) {
+          animateSort(sortHist[historyIndex][i], "blue");
+          countDown++;
+          countUp++;
+        } else {
+          animateSort(sortHist[historyIndex][i], "red");
+          countDown--;
+          if (countDown == 0) {
+            countUp = 0;
+          }
+        }
       }
     }
-    for (i = 0; i < length; i = i + 2 * width) {
-      bottomUpMerge(
-        numbers,
-        i,
-        Math.min(i + width, length),
-        Math.min(i + 2 * width, length)
-      );
-    }
+    historyIndex++;
+    (countDown = 0), (countUp = 0);
   }
 }
 
-async function bottomUpMerge(numbers, left, right, end) {
-  var length = left,
-    m = right,
-    currentSort = [],
-    j;
+function mergeSort(array) {
+  var arrays = [array.slice()],
+    n = array.length,
+    array0 = array,
+    array1 = new Array(n);
 
-  for (j = left; j < end; j++) {
-    clearCanvas();
-    await sleep(50);
-
-    for (let n = 0; n < currentSort.length; n++) {
-      animateSort(currentSort[n], "orange");
+  for (var m = 1; m < n; m <<= 1) {
+    for (var i = 0; i < n; i += m << 1) {
+      merge(i, Math.min(i + m, n), Math.min(i + (m << 1), n));
     }
-    if (length < right && (m >= end || numbers[length] < numbers[m])) {
-      currentSort.push(numbers[length]);
-      length++;
-    } else {
-      currentSort.push(numbers[m]);
-      m++;
-    }
+    arrays.push(array1.slice());
+    (array = array0), (array0 = array1), (array1 = array);
   }
 
-  currentSort.map(function (number, i) {
-    numbers[left + i] = number;
-  });
+  function merge(left, right, end) {
+    for (var i0 = left, i1 = right, j = left; j < end; ++j) {
+      array1[j] =
+        array0[
+          i0 < right && (i1 >= end || array0[i0] <= array0[i1]) ? i0++ : i1++
+        ];
+    }
+  }
+  return arrays;
 }
 
 async function callQuickSort(numsArray) {

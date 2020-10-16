@@ -34,46 +34,57 @@
         <option value="75">75</option>
         <option value="100">100</option>
       </select>
-      <button
-        type="button"
-        class="algorithm-modifiers__button--bubble-sort"
-        name="bubble-sort-button"
-        onclick="bubbleSort(unsortedArray)"
+      <a href="#myCanvas">
+        <button
+          type="button"
+          class="algorithm-modifiers__button--bubble-sort"
+          name="bubble-sort-button"
+          onclick="bubbleSort(unsortedArray)"
+        >
+          Bubble Sort
+        </button></a
       >
-        Bubble Sort
-      </button>
-      <button
-        type="button"
-        class="algorithm-modifiers__button--Insertion-sort"
-        name="Insertion-sort-button"
-        onclick="insertionSort(unsortedArray)"
+      <a href="#myCanvas">
+        <button
+          type="button"
+          class="algorithm-modifiers__button--Insertion-sort"
+          name="Insertion-sort-button"
+          onclick="insertionSort(unsortedArray)"
+        >
+          Insertion Sort
+        </button></a
       >
-        Insertion Sort
-      </button>
-      <button
-        type="button"
-        class="algorithm-modifiers__button--merge-sort"
-        name="merge-sort-button"
-        onclick="bottomUpMergeSort(unsortedArray)"
+      <a href="#myCanvas">
+        <button
+          type="button"
+          class="algorithm-modifiers__button--merge-sort"
+          name="merge-sort-button"
+          onclick="drawMergeSort()"
+        >
+          Merge Sort
+        </button></a
       >
-        Merge Sort
-      </button>
-      <button
-        type="button"
-        class="algorithm-modifiers__button--quick-sort"
-        name="quick-sort-button"
-        onclick="callQuickSort(unsortedArray)"
+      <a href="#myCanvas">
+        <button
+          type="button"
+          class="algorithm-modifiers__button--quick-sort"
+          name="quick-sort-button"
+          onclick="callQuickSort(unsortedArray)"
+        >
+          Quick Sort
+        </button></a
       >
-        Quick Sort
-      </button>
-      <button
-        type="button"
-        class="algorithm-modifiers__button--new-array"
-        name="new-array-button"
-        onclick="createArray()"
+      <a href="#myCanvas">
+        ><button
+          type="button"
+          class="algorithm-modifiers__button--new-array"
+          name="new-array-button"
+          onclick="createArray()"
+        >
+          New Array
+        </button></a
       >
-        New Array
-      </button>
+      >
     </div>
     <canvas id="myCanvas"></canvas>
     <p hidden id="bubble-sort-description">
