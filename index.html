@@ -27,63 +27,67 @@
         method.
       </li>
     </ul>
-    <div class="algorithm-modifiers">
+    <div class="algorithm-modifiers" id="array-options">
       <select id="algorithm-modifiers__select--array-size" name="array-size">
         <option value="25">25</option>
         <option value="50">50</option>
         <option value="75">75</option>
         <option value="100">100</option>
       </select>
-      <a href="#myCanvas">
+      <a href="#array-options">
         <button
           type="button"
           class="algorithm-modifiers__button--bubble-sort"
           name="bubble-sort-button"
-          onclick="bubbleSort(unsortedArray)"
+          onclick="bubbleSort(unsortedArray); disableButtonClicking()"
+          id="bubble-sort"
         >
           Bubble Sort
         </button></a
       >
-      <a href="#myCanvas">
+      <a href="#array-options">
         <button
           type="button"
           class="algorithm-modifiers__button--Insertion-sort"
           name="Insertion-sort-button"
-          onclick="insertionSort(unsortedArray)"
+          onclick="insertionSort(unsortedArray); disableButtonClicking()"
+          id="insertion-sort"
         >
           Insertion Sort
         </button></a
       >
-      <a href="#myCanvas">
+      <a href="#array-options">
         <button
           type="button"
           class="algorithm-modifiers__button--merge-sort"
           name="merge-sort-button"
-          onclick="drawMergeSort()"
+          onclick="drawMergeSort(); disableButtonClicking()"
+          id="merge-sort"
         >
           Merge Sort
         </button></a
       >
-      <a href="#myCanvas">
+      <a href="#array-options">
         <button
           type="button"
           class="algorithm-modifiers__button--quick-sort"
           name="quick-sort-button"
-          onclick="callQuickSort(unsortedArray)"
+          onclick="callQuickSort(unsortedArray); disableButtonClicking()"
+          id="quick-sort"
         >
           Quick Sort
         </button></a
       >
-      <a href="#myCanvas">
-        ><button
+      <a href="#array-options">
+        <button
           type="button"
           class="algorithm-modifiers__button--new-array"
           name="new-array-button"
           onclick="createArray()"
+          id="new-array"
         >
           New Array
         </button></a
-      >
       >
     </div>
     <canvas id="myCanvas"></canvas>
@@ -129,7 +133,7 @@
       placerat eget. Vestibulum aliquam elementum sagittis. Morbi aliquet
       pretium sapien scelerisque egestas.
     </p>
-    <p hidden id="Insertion-sort-description">
+    <p hidden id="insertion-sort-description">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a ex
       turpis. Nullam eleifend tortor suscipit, euismod felis id, rutrum sapien.
       Donec imperdiet tempor orci a auctor. Nullam ac arcu ac diam consequat

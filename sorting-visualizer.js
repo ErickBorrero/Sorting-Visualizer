@@ -3,6 +3,17 @@ let ctx;
 let unsortedArray;
 let barStart = 1;
 let size;
+let sortHist;
+var historyIndex = 0;
+let countUp = 0;
+let countDown = 0;
+let buttonsArray = [
+  "new-array",
+  "bubble-sort",
+  "insertion-sort",
+  "merge-sort",
+  "quick-sort",
+];
 
 function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
@@ -81,80 +92,16 @@ async function bubbleSort(numsArray) {
   }
 
   finalArray(numsArray);
+  enableButtonClicking();
 
   return numsArray;
 }
 
-// async function bottomUpMergeSort(numbers) {
-//   var numsArray = [];
-
-//   if (numbers) {
-//     numsArray = numbers.map(function (number) {
-//       return number;
-//     });
-//   }
-
-//   await Promise.all([bottomUpSort(numsArray, numsArray.length)]);
-//   finalArray(numsArray);
-
-//   return numsArray;
-// }
-
-// async function bottomUpSort(numbers, length) {
-//   var width, i;
-
-//   for (width = 1; width < length; width = width * 2) {
-//     clearCanvas();
-
-//     await sleep(1800);
-//     for (i = 0; i < length; i = i + 2 * width) {
-//       bottomUpMerge(
-//         numbers,
-//         i,
-//         Math.min(i + width, length),
-//         Math.min(i + 2 * width, length)
-//       );
-//     }
-//   }
-// }
-
-// async function bottomUpMerge(numbers, left, right, end) {
-//   var length = left,
-//     m = right,
-//     currentSort = [],
-//     j;
-
-//   for (j = left; j < end; j++) {
-//     if (length < right && (m >= end || numbers[length] < numbers[m])) {
-//       currentSort.push(numbers[length]);
-//       length++;
-//     } else {
-//       currentSort.push(numbers[m]);
-//       m++;
-//     }
-//   }
-//   clearCanvas();
-//   await sleep(50);
-
-//   for (let n = 0; n < currentSort.length; n++) {
-//     if (n < right) {
-//       animateSort(currentSort[n], "yellow");
-//     } else {
-//       animateSort(currentSort[n], "orange");
-//     }
-//   }
-
-//   currentSort.map(function (number, i) {
-//     numbers[left + i] = number;
-//   });
-// }
-
-let sortHist;
-var historyIndex = 0;
-let countUp = 0;
-let countDown = 0;
 async function drawMergeSort() {
+  document.getElementById("merge-sort-description").hidden = false;
+
   sortHist = await Promise.all(mergeSort(unsortedArray));
+
   while (historyIndex < sortHist.length) {
     clearCanvas();
     if (historyIndex == sortHist.length - 1) {
@@ -181,6 +128,7 @@ async function drawMergeSort() {
     historyIndex++;
     (countDown = 0), (countUp = 0);
   }
+  enableButtonClicking();
 }
 
 function mergeSort(array) {
@@ -209,8 +157,11 @@ function mergeSort(array) {
 }
 
 async function callQuickSort(numsArray) {
+  document.getElementById("quick-sort-description").hidden = false;
+
   await quickSort(numsArray, 0, unsortedArray.length - 1);
   finalArray(numsArray);
+  enableButtonClicking();
 }
 
 async function quickSort(numsArray, start, last) {
@@ -255,6 +206,8 @@ async function sortArray(numsArray, start, last) {
 }
 
 async function insertionSort(numsArray) {
+  document.getElementById("insertion-sort-description").hidden = false;
+
   let length = numsArray.length;
 
   for (let unsortedIndex = 1; unsortedIndex < length; unsortedIndex++) {
@@ -282,7 +235,7 @@ async function insertionSort(numsArray) {
   }
 
   finalArray(numsArray);
-
+  enableButtonClicking();
   return numsArray;
 }
 
@@ -302,4 +255,16 @@ async function finalArray(numsArray) {
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function disableButtonClicking() {
+  for (let index = 0; index < buttonsArray.length; index++) {
+    document.getElementById(buttonsArray[index]).style.pointerEvents = "none";
+  }
+}
+
+function enableButtonClicking() {
+  for (let index = 0; index < buttonsArray.length; index++) {
+    document.getElementById(buttonsArray[index]).style.pointerEvents = "auto";
+  }
 }
