@@ -288,7 +288,7 @@ async function finalArray(numsArray) {
 
   for (let length = 0; length < numsArray.length; length++) {
     await sleep(50);
-    animateSort(numsArray[length], "green");
+    animateSort(numsArray[length], "#31EF5E");
   }
 }
 

@@ -1,46 +1,70 @@
+@font-face {
+  font-family: SF Outer Limits;
+  src: url(fonts/SFOuterLimits.ttf);
+}
+@font-face {
+  font-family: Zero Hour;
+  src: url(fonts/zero\ hour.ttf);
+}
+@font-face {
+  font-family: Vandiana Platin;
+  src: url(fonts/Vandiana_Platin_Lite.ttf);
+}
+
 h1 {
+  font-family: "SF Outer Limits";
   display: flex;
   justify-content: center;
-  color: #250253;
-  font-family: impact, sans-serif;
+  color: lightgray;
   letter-spacing: 2px;
   font-size: 70px;
-  text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #eee, 2px 1px 1px #ccc,
-    1px 2px 1px #eee, 3px 2px 1px #ccc, 2px 3px 1px #eee, 4px 3px 1px #ccc,
-    3px 4px 1px #eee, 5px 4px 1px #ccc, 4px 5px 1px #eee, 6px 5px 1px #ccc,
-    5px 6px 1px #eee, 7px 6px 1px #ccc;
+  text-shadow: 1px 0px 1px black, 0px 1px 1px black, 2px 1px 1px black,
+    1px 2px 1px black, 3px 2px 1px black, 2px 3px 1px black, 4px 3px 1px black,
+    3px 4px 1px black, 5px 4px 1px black, 4px 5px 1px black, 6px 5px 1px black,
+    5px 6px 1px black, 7px 6px 1px rgb(160, 156, 156);
 }
 body {
-  background-image: linear-gradient(to bottom right, #e7717d, #e4e4e4, #e7717d);
+  background-image: linear-gradient(#021131, #021131, white, #021131, #021131);
+  background-size: cover;
 }
 #myCanvas {
   padding: 1em;
 }
 p {
-  font-size: 19px;
-}
-b {
+  color: lightgray;
   font-size: 21px;
 }
-li {
+b {
+  color: #fff562;
+  font-size: 20px;
   display: flex;
   justify-content: center;
-  font-size: 30px;
+}
+li {
+  padding: 0;
+  list-style: decimal;
+  font-family: "Zero Hour";
+  color: lightgray;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
   /* color: #afd275; */
 }
 
 .algorithm-modifiers {
   display: flex;
   justify-content: space-around;
-  border-bottom: 4px double #2c5030;
+  border-bottom: 5px solid black;
   padding-bottom: 1px;
 }
 
 [class*="algorithm-modifiers__button"] {
-  color: #c2cad0 !important;
+  font-family: "Zero Hour";
+  font-weight: bold;
+  color: black !important;
   text-transform: uppercase;
   text-decoration: none;
-  background: #250253;
+  background: #a50b39;
   padding: 7px;
   border-radius: 50px;
   border: none;
