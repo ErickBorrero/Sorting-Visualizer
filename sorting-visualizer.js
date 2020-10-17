@@ -20,7 +20,7 @@ function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
   ctx = barsCanvas.getContext("2d");
 
-  barsCanvas.width = 1500;
+  barsCanvas.width = 900;
   barsCanvas.height = 500;
 }
 
