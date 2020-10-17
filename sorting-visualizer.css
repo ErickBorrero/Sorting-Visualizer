@@ -12,7 +12,7 @@
 }
 
 h1 {
-  font-family: "SF Outer Limits";
+  font-family: "SF Outer Limits" !important;
   display: flex;
   justify-content: center;
   color: lightgray;
@@ -43,7 +43,7 @@ b {
 li {
   padding: 0;
   list-style: decimal;
-  font-family: "Zero Hour";
+  font-family: "Zero Hour" !important;
   color: lightgray;
   display: flex;
   justify-content: center;
@@ -59,7 +59,7 @@ li {
 }
 
 [class*="algorithm-modifiers__button"] {
-  font-family: "Zero Hour";
+  font-family: "Zero Hour" !important;
   font-weight: bold;
   color: black !important;
   text-transform: uppercase;
