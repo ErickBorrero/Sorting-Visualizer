@@ -20,7 +20,7 @@ function createCanvas() {
   barsCanvas = document.getElementById("myCanvas");
   ctx = barsCanvas.getContext("2d");
 
-  barsCanvas.width = 900;
+  barsCanvas.width = 1150;
   barsCanvas.height = 500;
 }
 
@@ -97,7 +97,7 @@ async function bubbleSort(numsArray) {
         if (length == largestIndex) {
           animateSort(numsArray[length], "red");
         } else if (length > last) {
-          animateSort(numsArray[length], "green");
+          animateSort(numsArray[length], "#31EF5E");
         } else {
           animateSort(numsArray[length], "#250253");
         }
@@ -129,7 +129,7 @@ async function drawMergeSort() {
     if (historyIndex == sortHist.length - 1) {
       for (i = 0; i < sortHist[historyIndex].length; i++) {
         await sleep(50);
-        animateSort(sortHist[historyIndex][i], "green");
+        animateSort(sortHist[historyIndex][i], "#31EF5E");
       }
     } else if (historyIndex >= 0) {
       for (i = 0; i < sortHist[historyIndex].length; i++) {
@@ -263,7 +263,7 @@ async function insertionSort(numsArray) {
         if (length == sortedIndex) {
           animateSort(numsArray[length], "red");
         } else if (length < unsortedIndex) {
-          animateSort(numsArray[length], "green");
+          animateSort(numsArray[length], "#31EF5E");
         } else {
           animateSort(numsArray[length], "#250253");
         }

@@ -189,3 +189,9 @@ arr = [
 let sortHist = mergeSort(arr);
 
 console.log(sortHist);
+
+var x = [1];
+
+x[100] = 2;
+
+console.log(x.length);
