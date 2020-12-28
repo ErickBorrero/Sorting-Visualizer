@@ -41,6 +41,17 @@
       <a href="#array-options">
         <button
           type="button"
+          class="algorithm-modifiers__button--new-array"
+          name="new-array-button"
+          onclick="createArray()"
+          id="new-array"
+        >
+          New Array
+        </button></a
+      >
+      <a href="#array-options">
+        <button
+          type="button"
           class="algorithm-modifiers__button--bubble-sort"
           name="bubble-sort-button"
           onclick="disableButtonClicking(); bubbleSort(unsortedArray)"
@@ -82,17 +93,7 @@
           Quick Sort
         </button></a
       >
-      <a href="#array-options">
-        <button
-          type="button"
-          class="algorithm-modifiers__button--new-array"
-          name="new-array-button"
-          onclick="createArray()"
-          id="new-array"
-        >
-          New Array
-        </button></a
-      >
+
     </div>
     <canvas id="myCanvas"></canvas>
     <p hidden id="bubble-sort-description">
